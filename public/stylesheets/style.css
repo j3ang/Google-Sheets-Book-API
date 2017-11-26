@@ -215,6 +215,11 @@ a {
     margin-top: 1em;
 }
 
+#booksform {
+    display: flex;
+    flex-direction: column;
+}
+
 .logo{
     background: url('../img/google_book.png');
     width: 600px;

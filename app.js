@@ -14,8 +14,6 @@ var authConfig = require('./config/auth'),
 //require pages
 var index = require('./routes/index');
 var search = require('./routes/search');
-// var connect = require('./routes/connect');
-var oauth = require('./routes/oauthcall2back');
 
 //initiate express app
 var app = express();
@@ -75,8 +73,6 @@ app.use(express.static(__dirname + '/public'));
 
 app.use('/', index); // mount the index route at the /path
 app.use('/search', search);
-// app.use('/connect', connect);
-app.use('/oauthcall2back', oauth);
 
 
 
@@ -100,7 +96,7 @@ app.use(function(err, req, res, next) {
 
 
 
-var port = 8000;
+var port = 1200;
 app.listen(port, function() {
     console.log("app listening on port: " + port);
 });
