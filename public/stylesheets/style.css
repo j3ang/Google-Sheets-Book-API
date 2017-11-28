@@ -133,6 +133,14 @@ form {
     width: 22.750em;
     height: auto;
 }
+#thelable{
+  cursor:default;
+}
+
+li:hover{
+cursor:pointer;
+}
+
 #results {
     margin: 0 auto;
     margin-top: 4em;

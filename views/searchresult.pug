@@ -4,11 +4,17 @@ block content
   title= title
   body
     <img id="logo" src="images/google_book.png">
+    
+    lable#thelable(for="check")="hello"
+    input#check(type="checkbox" value="check" name="check" )
+      
 
     // register form
   form#form(method='post' action='/searchbook')
      input#inputText(type='text', name='bkname' value='The Hunger Games' placeholder='Add books to your shelf')
      input#submit(type='submit' value='search')
+     
+  
 
   main#main_content
      div#mybooks 
@@ -18,9 +24,9 @@ block content
        button.button#sheetsBtn(type='submit') add to google sheet
        ul#results
          each val, index in values.length ? values : ['There are no values']
-             li= index+1 + ". " + val.title 
-              p= val.authors
-              input#bookcheck(type='checkbox' name='selected')
+             li 
+              lable(for="bookcheck")= val.title + val.authors
+              input#bookcheck(type='radio' value='bookcheck' name='bookcheck')
 
          
      canvas#stage
