@@ -1,12 +1,24 @@
-extends layout.pug
+extends layout
 
-block content 
-  body  
-  div#login-page-wrapper
-    h1#title Hello!
-    h3#welcome Welcome to Book Tracker, let's get started.
-    a.button.red(href='/auth/google') Login with Google
-    
+block content
+  if (!user)
+    a(href="/login") Login
+    br
+    a(href="/register") Register
+  if (user)
+    p You are currently logged in as #{user.username}
+    a(href="/logout") Logout
+
+    title= title
+    body
+        <img id="logo" src="images/google_book.png">
+
+
+        // register form
+        form#searchForm(method='get' action="/search/init")
+            input#inputText(type='text', name='bkname' placeholder='Add books to your shelf')
+            input#submit(type='submit' value='search')
+            h1= submission
     
   
     

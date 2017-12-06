@@ -1,13 +1,13 @@
 extends layout.pug
 
-block content 
-  title= title
-  body
-    <img id="logo" src="images/google_book.png">
+block content
+    title= title
+    body
+        <img id="logo" src="/images/google_book.png">
 
-    // register form
-  form#form(method='post' action='/searchbook')
-     input#inputText(type='text', name='bkname' value='The Hunger Games' placeholder='Add books to your shelf')
-     input#submit(type='submit' value='search')
-         
-     canvas#stage
+
+          // register form
+        form#searchForm(method='get' action="/search/init")
+            input#inputText(type='text', name='bkname' placeholder='Add books to your shelf')
+            input#submit(type='submit' value='search')
+            h1= submission

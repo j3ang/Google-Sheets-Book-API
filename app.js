@@ -14,6 +14,8 @@ var authConfig = require('./config/auth'),
 //require pages
 var index = require('./routes/index');
 var search = require('./routes/search');
+var submit = require('./routes/submit');
+var user = require('./routes/user');
 
 //initiate express app
 var app = express();
@@ -37,29 +39,27 @@ passport.deserializeUser(function(obj, done) {
   // Users.findById(obj, done);
   done(null, obj);
 });
+
 // Use the GoogleStrategy within Passport.
 //   Strategies in Passport require a `verify` function, which accept
 //   credentials (in this case, an accessToken, refreshToken, and Google
 //   profile), and invoke a callback with a user object.
 //   See http://passportjs.org/docs/configure#verify-callback
 passport.use(new GoogleStrategy(
-
   // Use the API access settings stored in ./config/auth.json. You must create
   // an OAuth 2 client ID and secret at: https://console.developers.google.com
-  authConfig.google,
-
-  function(accessToken, refreshToken, profile, done) {
-
+  authConfig.google, function(accessToken, refreshToken, profile, done) {
     // Typically you would query the database to find the user record
     // associated with this Google profile, then pass that object to the `done`
     // callback.
-    return done(null, profile);
+    // console.log('accessToken:' + accessToken);
+    // console.log('refreshToken:' + refreshToken);
+        return done(null, console.log(JSON.stringify(profile.id)));
   }
 ));
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -73,7 +73,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.use('/', index); // mount the index route at the /path
 app.use('/search', search);
-
+app.use('/submit',submit);
 
 
 // catch 404 and forward to error handler

@@ -137,9 +137,6 @@ form {
   cursor:default;
 }
 
-li:hover{
-cursor:pointer;
-}
 
 #results {
     margin: 0 auto;
@@ -149,7 +146,7 @@ cursor:pointer;
     width: 23.750em;
     height: 40em;
     overflow: auto;
-    color: white;
+    color: #008cba;
 }
 a {
     color: #ffe3c7;
