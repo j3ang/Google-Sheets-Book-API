@@ -1,0 +1,33 @@
+<section>
+  <div>
+    <div>
+      <h2>Book details</h2>
+    </div>
+    <form id="create-form-wrapper" method="post" action="/upsert">
+
+      {{#if book}}
+      <input type="hidden" name="id" value="{{book.id}}" />
+      {{/if}}
+
+      <div>
+        <div>
+          <label for="bookName">Book name</label>
+          <input type="text" name="bookName" value="{{book.bookName}}">
+        </div>
+
+        <div>
+          <label for="bookAuthor">Book author</label>
+          <input type="text" name="bookAuthor" id="bookAuthor" value="{{book.bookAuthor}}">
+        </div>
+      </div>
+
+      <div>
+        <button>
+          {{#if book}}Save{{else}}Create{{/if}}
+        </button>
+        <a href="/">Cancel</a>
+      </div>
+
+    </form>
+  </div>
+</section>
