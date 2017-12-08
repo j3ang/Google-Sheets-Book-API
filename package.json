@@ -1,11 +1,9 @@
 {
-  "name": "sheets-api-codelab",
-  "description": "In this codelab, you'll learn how to integrate the Google Sheets API into an application to provide custom reporting.",
+  "name": "Book Tracker",
   "version": "1.0.0",
   "license": "Apache-2.0",
   "author": {
-    "name": "Eric Koleda",
-    "email": "ekoleda+devrel@googlers.com"
+    "name": "Alex Wang"
   },
   "repository": "https://github.com/googlecodelabs/sheets-api",
   "scripts": {
@@ -15,10 +13,10 @@
     "body-parser": "~1.13.2",
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
-    "google-auth-library": "^0.12.0",
-    "googleapis": "^23.0.0",
-    "handlebars-helpers": "^0.10.0",
+    "google-auth-library": "^0.9.7",
+    "googleapis": "^7.0.0",
     "morgan": "^1.7.0",
+    "request": "^2.83.0",
     "sequelize": "^3.21.0",
     "sqlite3": "^3.1.3"
   },

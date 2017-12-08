@@ -5,37 +5,25 @@ var router = express.Router();
 var models = require('./models');
 var Sequelize = require('sequelize');
 var request = require('request');
-var helpers = require('handlebars-helpers')();
 
-// TODO: Show spreadsheets on the main page.
 router.get('/', function(req, res, next) {
-  console.log("index.js was run. router.get /");
-  res.render('index');
-  // var options = {
-  //   book: [['createdAt', 'DESC']]
-  // };
-  // Sequelize.Promise.all([
-  //   models.book.findAll(options),
-  //   models.Spreadsheet.findAll(options)
-  // ]).then(function(results) {
-  //   res.render('index', {
-  //     books: results[0],
-  //     spreadsheets: results[1]
-  //   });
-  // });
-});
-
-router.get('/createbook', function(req, res, next) {
-  console.log('get /create was called');
-  res.render('upsert', {
-      title: 'Create Book'
-    }, function(err) {
-      next(err);
+  var options = {
+    book: [['createdAt', 'DESC']]
+  };
+  Sequelize.Promise.all([
+    models.Book.findAll(options),
+    models.Spreadsheet.findAll(options)
+  ]).then(function(results) {
+    res.render('index', {
+      books: results[0],
+      spreadsheets: results[1]
     });
+  }, function(err) {
+    next(err);
+  });
 });
 
-
-// Get /search/init from searchresult view
+// Get /search from searchresult view
 router.get('/search', function(req,res){
     console.log('routes.js: get /search was run');
     console.log(req.query.bkname);
@@ -82,20 +70,41 @@ router.get('/search', function(req,res){
     });
 });
 
+router.get('/add', function(req,res){
+    console.log(req.query.bookchecked)
+
+var result = (req.query.bookchecked).split(",");
+console.log(result);
+
+var book ={};
+book.bookName = result[0];
+book.bookAuthor = result[1];
+
+
+console.log("-----"+book.bookname);
+    res.render('upsert',{
+      book:book
+    });
+});
+
+router.get('/create', function(req, res, next) {
+  res.render('upsert');
+});
+
 router.get('/edit/:id', function(req, res, next) {
-  models.book.findById(req.params.id).then(function(book) {
+  models.Book.findById(req.params.id).then(function(book) {
     if (book) {
       res.render('upsert', {
         book: book
       });
     } else {
-      next(new Error('book not found: ' + req.params.id));
+      next(new Error('Book not found: ' + req.params.id));
     }
   });
 });
 
 router.get('/delete/:id', function(req, res, next) {
-  models.book.findById(req.params.id)
+  models.Book.findById(req.params.id)
     .then(function(book) {
       if (!book) {
         throw new Error('book not found: ' + req.params.id);
@@ -117,7 +126,8 @@ router.post('/upsert', function(req, res, next) {
   });
 });
 
-// TODO: Add route for creating spreadsheet.
+// Route for creating spreadsheet.
+
 var SheetsHelper = require('./sheets');
 
 router.post('/spreadsheets', function(req, res, next) {
@@ -127,7 +137,7 @@ router.post('/spreadsheets', function(req, res, next) {
   }
   var accessToken = auth.split(' ')[1];
   var helper = new SheetsHelper(accessToken);
-  var title = 'books (' + new Date().toLocaleTimeString() + ')';
+  var title = 'Books (' + new Date().toLocaleTimeString() + ')';
   helper.createSpreadsheet(title, function(err, spreadsheet) {
     if (err) {
       return next(err);
@@ -143,7 +153,7 @@ router.post('/spreadsheets', function(req, res, next) {
   });
 });
 
-// TODO: Add route for syncing spreadsheet.
+// Route for syncing spreadsheet.
 router.post('/spreadsheets/:id/sync', function(req, res, next) {
   var auth = req.get('Authorization');
   if (!auth) {
@@ -153,7 +163,7 @@ router.post('/spreadsheets/:id/sync', function(req, res, next) {
   var helper = new SheetsHelper(accessToken);
   Sequelize.Promise.all([
     models.Spreadsheet.findById(req.params.id),
-    models.book.findAll()
+    models.Book.findAll()
   ]).then(function(results) {
     var spreadsheet = results[0];
     var books = results[1];
@@ -165,6 +175,5 @@ router.post('/spreadsheets/:id/sync', function(req, res, next) {
     });
   });
 });
-
 
 module.exports = router;

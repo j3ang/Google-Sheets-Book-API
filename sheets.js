@@ -2,6 +2,11 @@ var google = require('googleapis');
 var googleAuth = require('google-auth-library');
 var util = require('util');
 
+/**
+ * Create a new Sheets helper.
+ * @param {string} accessToken An authorized OAuth2 access token.
+ * @constructor
+ */
 var SheetsHelper = function(accessToken) {
   var authClient = new googleAuth();
   var auth = new authClient.OAuth2();
@@ -13,6 +18,11 @@ var SheetsHelper = function(accessToken) {
 
 module.exports = SheetsHelper;
 
+/**
+ * Create a spreadsheet with the given name.
+ * @param  {string}   title    The name of the spreadsheet.
+ * @param  {Function} callback The callback function.
+ */
 SheetsHelper.prototype.createSpreadsheet = function(title, callback) {
   var self = this;
   var request = {
@@ -38,7 +48,7 @@ SheetsHelper.prototype.createSpreadsheet = function(title, callback) {
     if (err) {
       return callback(err);
     }
-    // TODO: Add header rows.
+    // Add header rows.
     var dataSheetId = spreadsheet.sheets[0].properties.sheetId;
     var requests = [
       buildHeaderRowRequest(dataSheetId),
@@ -56,16 +66,21 @@ SheetsHelper.prototype.createSpreadsheet = function(title, callback) {
       }
       return callback(null, spreadsheet);
     });
+
   });
 };
-
 
 var COLUMNS = [
   { field: 'id', header: 'ID' },
   { field: 'bookName', header: 'Book Name'},
-  { field: 'bookAuthor', header: 'Book Author' }
+  { field: 'bookAuthor', header: 'Book Author' },
 ];
 
+/**
+ * Builds a request that sets the header row.
+ * @param  {string} sheetId The ID of the sheet.
+ * @return {Object}         The reqeuest.
+ */
 function buildHeaderRowRequest(sheetId) {
   var cells = COLUMNS.map(function(column) {
     return {
@@ -96,6 +111,13 @@ function buildHeaderRowRequest(sheetId) {
   };
 }
 
+/**
+ * Sync the books to a spreadsheet.
+ * @param  {string}   spreadsheetId The ID of the spreadsheet.
+ * @param  {string}   sheetId       The ID of the sheet.
+ * @param  {Array}    books        The list of books.
+ * @param  {Function} callback      The callback function.
+ */
 SheetsHelper.prototype.sync = function(spreadsheetId, sheetId, books, callback) {
   var requests = [];
   // Resize the sheet.
@@ -119,7 +141,7 @@ SheetsHelper.prototype.sync = function(spreadsheetId, sheetId, books, callback) 
         rowIndex: 1,
         columnIndex: 0
       },
-      rows: buildRowsForOrders(books),
+      rows: buildRowsForBooks(books),
       fields: '*'
     }
   });
@@ -138,32 +160,29 @@ SheetsHelper.prototype.sync = function(spreadsheetId, sheetId, books, callback) 
   });
 };
 
+/**
+ * Builds an array of RowData from the books provided.
+ * @param  {Array} books The books.
+ * @return {Array}        The RowData.
+ */
 function buildRowsForBooks(books) {
-  return orders.map(function(book) {
+  return books.map(function(book) {
     var cells = COLUMNS.map(function(column) {
       switch (column.field) {
         case 'bookName':
           return {
             userEnteredValue: {
-              stringValue: book.name
-            },
-            userEnteredFormat: {
-              numberFormat: {
-                type: 'STRING'
-              }
+              stringValue: book.bookName
             }
           };
+          break;
         case 'bookAuthor':
           return {
             userEnteredValue: {
-              stringValue: book.author
-            },
-            userEnteredFormat: {
-              stringFormat: {
-                type: 'STRING'
-              }
+              stringValue: book.bookAuthor
             }
           };
+          break;
 
         default:
           return {

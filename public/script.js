@@ -12,13 +12,9 @@ function showError(error) {
   snackbar.get(0).MaterialSnackbar.showSnackbar(error);
 }
 
-function showMessage(message) {
-  var snackbar = $('#snackbar');
-  snackbar.removeClass('error');
-  snackbar.get(0).MaterialSnackbar.showSnackbar({
-    message: message
-  });
-}
+
+
+
 
 // TODO: Add Google Sign-in.
 function onSignIn(user) {
@@ -41,7 +37,7 @@ $(function() {
     var url = '/spreadsheets/' + spreadsheetId + '/sync';
     makeRequest('POST', url, function(err) {
       if (err) return showError(err);
-      showMessage('Sync complete.');
+      alert('Sync complete.');
     });
   });
 });
