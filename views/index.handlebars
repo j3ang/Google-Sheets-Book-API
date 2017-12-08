@@ -1,0 +1,65 @@
+<!-- Show spreadsheets -->
+<section id="spreadsheets">
+  <div id="sheets-container">
+    <div id="sheets-top">
+      <p>Spreadsheets</p>
+      <button class="button -dark" rel="create" type="button">Create</button>
+    </div>
+
+    {{#each spreadsheets}}
+    <div id="sheets-bottom">
+      <a href="https://docs.google.com/spreadsheets/d/{{id}}/edit"
+         target="_blank">{{name}}</a>
+      <span>
+        <button class="button -sun" rel="sync" data-spreadsheetid="{{id}}"
+                type="button">Sync</button>
+      </span>
+    </div>
+    {{/each}}
+
+  </div>
+</section>
+
+<div id="section-wrapper">
+  <section id="books">
+
+    <div id="books-wrapper">
+      {{#each books}}
+
+      <div id="book-wrapper">
+        <div >
+          <h2 id="title">Book #{{id}}</h2>
+        </div>
+        <div >
+          <table >
+            <tr>
+              <td>Title:</td>
+              <td>{{bookName}}</td>
+            </tr>
+            <tr>
+              <td>Author:</td>
+              <td>{{bookAuthor}}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div >
+          <a href="/edit/{{id}}">Edit</a>
+          <a href="/delete/{{id}}">Delete</a>
+        </div>
+
+      </div>
+      {{/each}}
+
+       <a id="addBtn" href="/create">Add</a>
+    </div>
+
+  </section>
+
+<section id="showsearch">
+  <form action="/search">
+      <button id="searchBtn" type="submit" type="button" />Search Goole Book</button>
+  </form>
+</section>
+
+</div>

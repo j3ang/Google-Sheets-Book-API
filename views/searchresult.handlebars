@@ -1,0 +1,29 @@
+<div id="mainpage-wrapper">
+  <section id="head">
+    <img id="logo" src="/images/google_book.png">
+  </section>
+
+  <section id="search-section">
+    <form id="searchForm" method='get' action="/search">
+      <input id="inputText" type="text" name='bkname' placeholder='Add books to your shelf'/>
+      <input id="#submit" type="submit" value="search" />
+    </form>
+  </section>
+
+  <section id="mybooks">
+   <form id="booksform" method='get' action="/add">
+    <button class="button blue" type="submit">Add to spreadsheet</button>
+      <ul class="book_list">
+        {{#each books}}
+        <li>
+          <input type="checkbox" value="{{title}},{{authors}}" name="bookchecked" id="bookchecked{{@key}}"/>
+          <div id="labels-wrapper">
+          <label id="bookname" for="bookchecked{{@key}}">{{@key}}.{{title}}</label>
+          <label id="bookauthor" for="bookchecked{{@key}}">{{authors}}</label>
+        </div>
+        </li>
+        {{/each}}
+      </ul>
+  </form>
+  </section>
+</div>
