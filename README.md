@@ -1,2 +1,0 @@
-You will develop an application in Node.js that pulls in external data from at least one third-party API. There is an option as to what kind of application you will build: either a command-line application (e.g., for storing API data for further analysis in another piece of software) or a Web application (e.g., for creating an interface that displays a mashup of data coming from different APIs). 
-You will need to install nodemodule
