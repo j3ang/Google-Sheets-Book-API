@@ -20,6 +20,7 @@
     "delimiter-stream": "^1.0.1",
     "elasticsearch": "^15.1.1",
     "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
     "express-jquery": "^1.8.3",
     "express-session": "^1.15.6",
     "google-auth-library": "^2.0.0",
@@ -35,6 +36,7 @@
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
     "pug": "2.0.0-beta11",
+    "sequelize": "^4.39.0",
     "serve-favicon": "~2.4.5",
     "sqlite3": "^4.0.2",
     "static": "^2.0.0"
