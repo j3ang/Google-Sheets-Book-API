@@ -1,0 +1,23 @@
+extends layout.pug
+
+block content 
+  title= title
+  body
+    <img id="logo" src="../images/google_book.png">
+    
+    // register form
+  form#form(method='get' action="/search/init")
+     input#inputText(type='text', name='bkname' value='The Hunger Games' placeholder='Add books to your shelf')
+     input#submit(type='submit' value='search')
+     
+
+
+  div#mybooks
+      form#booksform(method='get' action="/auth/google")
+          - var values = books;
+              button.button(type="submit" ) Add to spreedsheet
+              ul#results
+                  each val, index in values.length ? values : ['There are no values']
+                      li
+                          label(for="bookcheck" + index)= val.title + val.authors
+                          input(id="bookcheck" + index)(type='checkbox' value="Title:" + val.title + " Authors:" + val.authors name='bookcheck' + index)
